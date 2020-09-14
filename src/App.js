@@ -12,7 +12,7 @@ class App extends Component{
             Edit <code>src/App.js</code> and save to reload.
           </p>
           <h1>
-            Learn React
+            Hello React
           </h1>
         </header>
       </div>
