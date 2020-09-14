@@ -9,11 +9,8 @@ class App extends Component{
       <div className="App">
         <header className="App-header">
           < NaverMapLoading />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
           <h1>
-            Hello React
+            React Web Home
           </h1>
         </header>
       </div>
