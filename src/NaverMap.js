@@ -26,7 +26,6 @@ function NaverMapApi() {
 
 function NaverMapLoading() {
     const envNcpClientId = process.env.REACT_APP_NAVER_API_KEY;
-    console.log(envNcpClientId);
     return (
         <RenderAfterNavermapsLoaded
           ncpClientId={envNcpClientId}// 자신의 네이버 계정에서 발급받은 Client ID
