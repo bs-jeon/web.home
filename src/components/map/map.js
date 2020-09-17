@@ -1,7 +1,7 @@
 import React from 'react'
 import {Marker, NaverMap, RenderAfterNavermapsLoaded} from 'react-naver-maps'
 
-function NaverMapApi() {
+function NaverMapView() {
     const navermaps = window.naver.maps;
     return (
         <NaverMap
@@ -24,7 +24,7 @@ function NaverMapApi() {
   );
 }
 
-function NaverMapLoading() {
+function MapLoader() {
     const envNcpClientId = process.env.REACT_APP_NAVER_API_KEY;
     return (
         <RenderAfterNavermapsLoaded
@@ -32,10 +32,9 @@ function NaverMapLoading() {
           error={<p>Maps Load Error</p>}
           loading={<p>Maps Loading...</p>}
         >
-          <NaverMapApi />
+          <NaverMapView />
         </RenderAfterNavermapsLoaded>
       );
 }
 
-
-export default NaverMapLoading;
+export default MapLoader;
