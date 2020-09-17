@@ -10,7 +10,7 @@ class MainViewer extends Component {
         //Initial component state
         this.state = {
             fetching: false,
-            log: ''
+            pcpStationInfo: []
         }
     }
 
@@ -18,6 +18,10 @@ class MainViewer extends Component {
 
         this.setState({
             fetching: true,
+            pcpStationInfo: [],
+            // pcpMonthInfo: [],
+            // pcpWeekInfo: [],
+            // pcpDayInfo: []
         });
 
         const post = await Promise.all (
@@ -26,9 +30,12 @@ class MainViewer extends Component {
 
         const response = post[0].data;
         if (response.resultCode === '200') {
-            console.log(response.result)
-        }
+            console.log(response.resultCode);
 
+            this.setState({
+                pcpStationInfo: response.result,
+            });
+        }
 
         this.setState({
             fetching: false,
@@ -40,9 +47,14 @@ class MainViewer extends Component {
     }
 
     render() {
+
+        const {fetching, pcpStationInfo} = this.state;
+        console.log("before render"+fetching+" "+JSON.stringify(pcpStationInfo));
+
         return (
             <Wrapper>
-                <MapLoader />
+                <MapLoader 
+                pcpStationInfo = {pcpStationInfo}/>
             </Wrapper>
         );
     }
