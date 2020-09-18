@@ -24,15 +24,24 @@ function NaverMapView() {
   );
 }
 
-function MapLoader() {
+function MapLoader(pcpStationInfo) {
     const envNcpClientId = process.env.REACT_APP_NAVER_API_KEY;
+
+    if (pcpStationInfo != null) {
+      let json_pcpStationInfo = JSON.stringify(pcpStationInfo); 
+      for (let i = 0; i < json_pcpStationInfo.length; i++) {
+        console.log(json_pcpStationInfo[i]);
+      }
+    }
+
     return (
         <RenderAfterNavermapsLoaded
           ncpClientId={envNcpClientId}// 자신의 네이버 계정에서 발급받은 Client ID
           error={<p>Maps Load Error</p>}
           loading={<p>Maps Loading...</p>}
         >
-          <NaverMapView />
+          <NaverMapView 
+          pcpStationInfo = {pcpStationInfo}/>
         </RenderAfterNavermapsLoaded>
       );
 }

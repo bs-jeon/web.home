@@ -17,3 +17,15 @@ export function getStationInfo() {
     console.log(request);
     return axios(request);
 }
+
+export function getMonthInfo() {
+
+}
+
+export function getWeekInfo() {
+
+}
+
+export function getDayInfo() {
+
+}
