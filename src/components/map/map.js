@@ -27,12 +27,12 @@ function NaverMapView() {
 function MapLoader(pcpStationInfo) {
     const envNcpClientId = process.env.REACT_APP_NAVER_API_KEY;
 
-    if (pcpStationInfo != null) {
-      let json_pcpStationInfo = JSON.stringify(pcpStationInfo); 
-      for (let i = 0; i < json_pcpStationInfo.length; i++) {
-        console.log(json_pcpStationInfo[i]);
-      }
-    }
+    // if (pcpStationInfo != null) {
+    //   let json_pcpStationInfo = JSON.stringify(pcpStationInfo); 
+    //   for (let i = 0; i < json_pcpStationInfo.length; i++) {
+    //     console.log(json_pcpStationInfo[i]);
+    //   }
+    // }
 
     return (
         <RenderAfterNavermapsLoaded

@@ -27,9 +27,8 @@ export function getWeekInfo() {
 }
 
 export function getDayInfo() {
-
+    
 }
-
 // Uri uri = new Uri.Builder()
 //                     .scheme("https")
 //                     .authority("pf2g60j2w2.execute-api.ap-northeast-2.amazonaws.com")
@@ -52,6 +51,28 @@ export function getDayInfo() {
 //             itemList.put("uniqueID_list", data_list);
 //             itemList.put("time_type", "min_avg");
 //             itemList.put("min", "10");
+
+export function getCurrentInfo() {
+    const aws_url = 'https://pf2g60j2w2.execute-api.ap-northeast-2.amazonaws.com/prod/station/map/timestatistic';
+
+    let request = {
+        method: 'POST',
+        url: aws_url,
+        headers: {
+            'x-api-key': 'UaW7RafsoD1GOdpYzsNntajSMHR3AmngKtPDPJqa',
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        data: {
+            'uniqueID_list': [{"uniqueID":"3"}, {"uniqueID":"7"}],
+            "time_type": "min_avg",
+            "min": "10"
+        }
+    };
+
+    console.log(request);
+    return axios(request);
+}
+
 
 
 //=========================================================================================

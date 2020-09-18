@@ -25,16 +25,22 @@ class MainViewer extends Component {
         });
 
         const post = await Promise.all (
-            [aws.getStationInfo()]);
+            [aws.getStationInfo(),
+            aws.getCurrentInfo()]);
         console.log(post);
 
-        const response = post[0].data;
-        if (response.resultCode === '200') {
-            console.log(response.resultCode);
+        const resp_getStationInfo = post[0].data;
+        const resp_getCurrentInfo = post[1].data;
+        if (resp_getStationInfo.resultCode === '200') {
+            console.log(resp_getStationInfo.result);
 
             this.setState({
-                pcpStationInfo: response.result,
+                pcpStationInfo: resp_getStationInfo.result,
             });
+        }
+
+        if (resp_getCurrentInfo.resultCode === '200') {
+            console.log(resp_getCurrentInfo.result);
         }
 
         this.setState({
@@ -49,7 +55,6 @@ class MainViewer extends Component {
     render() {
 
         const {fetching, pcpStationInfo} = this.state;
-        console.log("before render"+fetching+" "+JSON.stringify(pcpStationInfo));
 
         return (
             <Wrapper>
