@@ -18,18 +18,22 @@ class MainViewer extends Component {
 
         this.setState({
             fetching: true,
-            log: []
+            stationInfo: []
         });
 
         const post = await Promise.all (
             [aws.getStationInfo()]);
         console.log(post);
 
-        const log = post[0].data;
+        let response = post[0].data;
+
+        if (response.resultCode === '200') {
+            let jsonData = response.result;
+            console.log("JSON" + JSON.stringify(jsonData[1]));
+        }
 
         this.setState({
             fetching: false,
-            log
         });
     }
 
@@ -38,8 +42,6 @@ class MainViewer extends Component {
     }
 
     render() {
-        const {fetching, log} = this.state;
-        console.log(fetching, log);
         return (
             <Wrapper>
                 <MapLoader />

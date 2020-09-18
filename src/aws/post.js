@@ -16,13 +16,4 @@ export function getStationInfo() {
 
     console.log(request);
     return axios(request);
-    // let response = await axios(request);
-    // let responseOk = response && response.status === 200 && response.statusText === 'OK';
-
-    // let data  = await response.data;
-    // if (responseOk) {
-    //     console.log(data);
-    // } else {
-    //     console.log(response)
-    // }
 }
