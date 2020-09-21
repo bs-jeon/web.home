@@ -52,8 +52,12 @@ export function getDayInfo() {
 //             itemList.put("time_type", "min_avg");
 //             itemList.put("min", "10");
 
-export function getCurrentInfo() {
+export function getCurrentInfo(jArrayStationInfo) {
     const aws_url = 'https://pf2g60j2w2.execute-api.ap-northeast-2.amazonaws.com/prod/station/map/timestatistic';
+    //const uniqueid_str = [{"uniqueID":"5"},{"uniqueID":"7"}];
+    const uniqueid_str = jArrayStationInfo;
+
+    console.log(uniqueid_str)
 
     let request = {
         method: 'POST',
@@ -63,13 +67,13 @@ export function getCurrentInfo() {
             'Content-Type': 'application/json; charset=utf-8',
         },
         data: {
-            'uniqueID_list': [{"uniqueID":"3"}, {"uniqueID":"7"}],
+            'uniqueID_list': uniqueid_str,
             "time_type": "min_avg",
             "min": "10"
         }
     };
 
-    console.log(request);
+    console.log("getCurrentInfo"+request);
     return axios(request);
 }
 

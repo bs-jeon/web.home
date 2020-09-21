@@ -1,8 +1,9 @@
 import React from 'react'
 import {Marker, NaverMap, RenderAfterNavermapsLoaded} from 'react-naver-maps'
 
-function NaverMapView() {
+function NaverMapView(pcpStationInfo) {
     const navermaps = window.naver.maps;
+    console.log("NaverMapView"+JSON.stringify(pcpStationInfo));
     return (
         <NaverMap
             mapDivId={'maps-getting-started-uncontrolled'} // default: react-naver-map
@@ -27,12 +28,9 @@ function NaverMapView() {
 function MapLoader(pcpStationInfo) {
     const envNcpClientId = process.env.REACT_APP_NAVER_API_KEY;
 
-    // if (pcpStationInfo != null) {
-    //   let json_pcpStationInfo = JSON.stringify(pcpStationInfo); 
-    //   for (let i = 0; i < json_pcpStationInfo.length; i++) {
-    //     console.log(json_pcpStationInfo[i]);
-    //   }
-    // }
+    if (pcpStationInfo != null) {
+      console.log("==========="+JSON.stringify(pcpStationInfo));
+    }
 
     return (
         <RenderAfterNavermapsLoaded

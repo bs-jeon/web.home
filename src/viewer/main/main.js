@@ -18,31 +18,34 @@ class MainViewer extends Component {
 
         this.setState({
             fetching: true,
-            pcpStationInfo: [],
-            // pcpMonthInfo: [],
-            // pcpWeekInfo: [],
-            // pcpDayInfo: []
+            pcpStationInfo: []
         });
 
-        const post = await Promise.all (
-            [aws.getStationInfo(),
-            aws.getCurrentInfo()]);
-        console.log(post);
-
-        const resp_getStationInfo = post[0].data;
-        const resp_getCurrentInfo = post[1].data;
+        const post_getStationInfo = await aws.getStationInfo();
+        const resp_getStationInfo = await post_getStationInfo.data;
+        let jArrayStationInfo = new Array();
         if (resp_getStationInfo.resultCode === '200') {
             console.log(resp_getStationInfo.result);
 
-            this.setState({
-                pcpStationInfo: resp_getStationInfo.result,
-            });
-        }
+            for (let i = 0; i < resp_getStationInfo.result.length; i++) {
+                let jObject = {
+                    "uniqueID": resp_getStationInfo.result[i].uniqueID
+                }
+                jArrayStationInfo.push(jObject);
+                console.log(resp_getStationInfo.result[i]);
+            }
+            const post_getPcpInfo = await Promise.all ([
+                aws.getCurrentInfo(jArrayStationInfo)
+            ]);
 
-        if (resp_getCurrentInfo.resultCode === '200') {
-            console.log(resp_getCurrentInfo.result);
+            const resp_getCurrentInfo = post_getPcpInfo[0].data;
+            this.setState (
+                {
+                    pcpStationInfo: resp_getCurrentInfo,
+                }
+            )
+            console.log(resp_getCurrentInfo);
         }
-
         this.setState({
             fetching: false,
         });
