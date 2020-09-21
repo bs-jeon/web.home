@@ -33,7 +33,6 @@ class MainViewer extends Component {
             let result = resp_getStation.result;
             
             let arrayData = new Array();
-            let jarrayObject = new JSONObject();
 
             for ( let i = 0; i < Object.keys(result).length; i++ ) {
                 console.log(result[i]);
