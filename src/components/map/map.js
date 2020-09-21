@@ -6,14 +6,19 @@ function NaverMapMarkers(props) {
   const data = props.stationInfo;
 
   if (data !== undefined) {
-    const station_list = data.map( (station) =>
-      (<div><Marker
-        key={1*station.uninqueID}
-        title={station.uninqueID}
+    const station_list = data.map( (station, index) => 
+    // (
+    //   console.log(station.uniqueID)
+    // ));
+      (<Marker
+        key={index}
+        title={JSON.stringify(station)}
         position={new navermaps.LatLng(1*station.loc_lat, 1*station.loc_lon)}
         animation={0}
-        onClick={() => {alert('여기는 N서울타워입니다.');}}
-      /></div>));
+        onClick={() => {alert(JSON.stringify(station));}}
+      />));
+
+      console.log(station_list);
 
       return (
         <div>{station_list}</div>
