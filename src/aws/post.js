@@ -18,8 +18,50 @@ export function getStationInfo() {
     return axios(request);
 }
 
-export function getMonthInfo() {
+// Logger.I("requestMonthlyAve : now - requestTime = "+ (now-requestTime));
+//         if(now > requestTime) {
+//             Uri uri = new Uri.Builder()
+//                     .scheme("https")
+//                     .authority("pf2g60j2w2.execute-api.ap-northeast-2.amazonaws.com")
+//                     .appendPath("prod")
+//                     // will be changed
+//                     .appendPath("station")
+//                     .appendPath("period")
+//                     .appendPath("daily")
+//                     .build();
 
+//             JSONArray data_list = new JSONArray();
+//             JSONObject id = new JSONObject();
+//             id.put("uniqueID", monthlyData.Uid);
+//             data_list.put(id);
+//             String YYMMDD = getDateTime();
+//             JSONObject body = new JSONObject();
+//             body.put("uniqueID_list", data_list);
+//             body.put("currentTime",YYMMDD);
+//             body.put("searchYear",monthlyData.Year);
+//             body.put("searchMonth",monthlyData.Month);
+export function getMonthlyInfo(jArrayStationInfo) {
+    const aws_url = 'https://pf2g60j2w2.execute-api.ap-northeast-2.amazonaws.com/prod/station/period/daily';
+    //const uniqueid_str = [{"uniqueID":"5"},{"uniqueID":"7"}];
+    const uniqueid_str = jArrayStationInfo;
+
+    let request = {
+        method: 'POST',
+        url: aws_url,
+        headers: {
+            'x-api-key': 'UaW7RafsoD1GOdpYzsNntajSMHR3AmngKtPDPJqa',
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        data: {
+            'uniqueID_list': uniqueid_str,
+            "currentTime": "200921",
+            "searchYear": "2020",
+            "searchMonth": "9",
+        }
+    };
+
+    console.log("getMonthlyInfo:"+request);
+    return axios(request);
 }
 
 export function getWeekInfo() {
@@ -103,8 +145,6 @@ export function getCurrentInfo(jArrayStationInfo) {
 //             itemList.put("uniqueID_list", data_list);
 //             itemList.put("time_type", "hour_sum");
 //             itemList.put("hour", "1");
-
-
 //=========================================================================================
 
 // Logger.I(" requestDailyAve: now - requestTime = "+ (now-requestTime));
@@ -151,26 +191,3 @@ export function getCurrentInfo(jArrayStationInfo) {
 //             itemList.put("uniqueID_list", data_list);
 
 
-// Logger.I("requestMonthlyAve : now - requestTime = "+ (now-requestTime));
-//         if(now > requestTime) {
-//             Uri uri = new Uri.Builder()
-//                     .scheme("https")
-//                     .authority("pf2g60j2w2.execute-api.ap-northeast-2.amazonaws.com")
-//                     .appendPath("prod")
-//                     // will be changed
-//                     .appendPath("station")
-//                     .appendPath("period")
-//                     .appendPath("daily")
-//                     .build();
-
-//             JSONArray data_list = new JSONArray();
-//             JSONObject id = new JSONObject();
-//             id.put("uniqueID", monthlyData.Uid);
-//             data_list.put(id);
-//             String YYMMDD = getDateTime();
-//             JSONObject body = new JSONObject();
-//     //        String[] array = YYMMDD.split("-");
-//             body.put("uniqueID_list", data_list);
-//             body.put("currentTime",YYMMDD);
-//             body.put("searchYear",monthlyData.Year);
-//             body.put("searchMonth",monthlyData.Month);

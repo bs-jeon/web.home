@@ -34,16 +34,16 @@ class MainViewer extends Component {
                 jArrayStationInfo.push(jObject);
                 console.log(resp_getStationInfo.result[i]);
             }
+
             const post_getPcpInfo = await Promise.all ([
-                aws.getCurrentInfo(jArrayStationInfo)
+                aws.getCurrentInfo(jArrayStationInfo),
+                // aws.getMonthlyInfo(jArrayStationInfo)
             ]);
 
             const resp_getCurrentInfo = post_getPcpInfo[0].data;
-            this.setState (
-                {
-                    pcpStationInfo: resp_getCurrentInfo,
-                }
-            )
+            this.setState ({
+                pcpStationInfo: resp_getCurrentInfo,
+            })
             console.log(resp_getCurrentInfo);
         }
         this.setState({
