@@ -62,7 +62,7 @@ class MainViewer extends Component {
         return (
             <Wrapper>
                 <MapLoader 
-                pcpStationInfo = {pcpStationInfo}/>
+                stationInfo = {pcpStationInfo.result}/>
             </Wrapper>
         );
     }
