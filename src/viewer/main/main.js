@@ -24,23 +24,30 @@ class MainViewer extends Component {
             // pcpDayInfo: []
         });
 
-        const post = await Promise.all (
-            [aws.getStationInfo(),
-            aws.getCurrentInfo()]);
-        console.log(post);
+        const post_getStation = await aws.getStationInfo();
+        const resp_getStation = post_getStation.data;
+        if ( resp_getStation.resultCode === '200' ) {
+            //To Do 
+            // Station 정보를 받아와서 Unique ID 별로 Monthly, Weekly, Daily, current 정보를 얻는다 
+            // uniqueid List를 만들어야 한다. 
+            let result = resp_getStation.result;
+            
+            let arrayData = new Array();
+            let jarrayObject = new JSONObject();
 
-        const resp_getStationInfo = post[0].data;
-        const resp_getCurrentInfo = post[1].data;
-        if (resp_getStationInfo.resultCode === '200') {
-            console.log(resp_getStationInfo.result);
+            for ( let i = 0; i < Object.keys(result).length; i++ ) {
+                console.log(result[i]);
+            }
 
-            this.setState({
-                pcpStationInfo: resp_getStationInfo.result,
-            });
-        }
-
-        if (resp_getCurrentInfo.resultCode === '200') {
-            console.log(resp_getCurrentInfo.result);
+            const post = await Promise.all (
+                [aws.getCurrentInfo()
+                ]);
+            console.log(post);
+    
+            const resp_getCurrentInfo = post[0].data;
+            if (resp_getCurrentInfo.resultCode === '200') {
+                console.log(resp_getCurrentInfo.result);
+            }
         }
 
         this.setState({
