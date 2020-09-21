@@ -13,7 +13,7 @@ function NaverMapMarkers(props) {
       (<Marker
         key={index}
         title={JSON.stringify(station)}
-        position={new navermaps.LatLng(1*station.loc_lat, 1*station.loc_lon)}
+        position={new navermaps.LatLng(station.loc_lat, station.loc_lon)}
         animation={0}
         onClick={() => {alert(JSON.stringify(station));}}
       />));
