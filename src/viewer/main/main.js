@@ -18,37 +18,34 @@ class MainViewer extends Component {
 
         this.setState({
             fetching: true,
-            pcpStationInfo: [],
-            // pcpMonthInfo: [],
-            // pcpWeekInfo: [],
-            // pcpDayInfo: []
+            pcpStationInfo: []
         });
 
-        const post_getStation = await aws.getStationInfo();
-        const resp_getStation = post_getStation.data;
-        if ( resp_getStation.resultCode === '200' ) {
-            //To Do 
-            // Station 정보를 받아와서 Unique ID 별로 Monthly, Weekly, Daily, current 정보를 얻는다 
-            // uniqueid List를 만들어야 한다. 
-            let result = resp_getStation.result;
-            
-            let arrayData = new Array();
+        const post_getStationInfo = await aws.getStationInfo();
+        const resp_getStationInfo = await post_getStationInfo.data;
+        let jArrayStationInfo = new Array();
+        if (resp_getStationInfo.resultCode === '200') {
+            console.log(resp_getStationInfo.result);
 
-            for ( let i = 0; i < Object.keys(result).length; i++ ) {
-                console.log(result[i]);
+            for (let i = 0; i < resp_getStationInfo.result.length; i++) {
+                let jObject = {
+                    "uniqueID": resp_getStationInfo.result[i].uniqueID
+                }
+                jArrayStationInfo.push(jObject);
+                console.log(resp_getStationInfo.result[i]);
             }
 
-            const post = await Promise.all (
-                [aws.getCurrentInfo()
-                ]);
-            console.log(post);
-    
-            const resp_getCurrentInfo = post[0].data;
-            if (resp_getCurrentInfo.resultCode === '200') {
-                console.log(resp_getCurrentInfo.result);
-            }
+            const post_getPcpInfo = await Promise.all ([
+                aws.getCurrentInfo(jArrayStationInfo),
+                // aws.getMonthlyInfo(jArrayStationInfo)
+            ]);
+
+            const resp_getCurrentInfo = post_getPcpInfo[0].data;
+            this.setState ({
+                pcpStationInfo: resp_getCurrentInfo,
+            })
+            console.log(resp_getCurrentInfo);
         }
-
         this.setState({
             fetching: false,
         });
@@ -65,7 +62,7 @@ class MainViewer extends Component {
         return (
             <Wrapper>
                 <MapLoader 
-                pcpStationInfo = {pcpStationInfo}/>
+                stationInfo = {pcpStationInfo.result}/>
             </Wrapper>
         );
     }

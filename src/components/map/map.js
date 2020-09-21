@@ -1,8 +1,38 @@
 import React from 'react'
 import {Marker, NaverMap, RenderAfterNavermapsLoaded} from 'react-naver-maps'
 
-function NaverMapView() {
+function NaverMapMarkers(props) {
+  const navermaps = window.naver.maps;
+  const data = props.stationInfo;
+
+  if (data !== undefined) {
+    const station_list = data.map( (station) =>
+      (<div><Marker
+        key={1*station.uninqueID}
+        title={station.uninqueID}
+        position={new navermaps.LatLng(1*station.loc_lat, 1*station.loc_lon)}
+        animation={0}
+        onClick={() => {alert('여기는 N서울타워입니다.');}}
+      /></div>));
+
+      return (
+        <div>{station_list}</div>
+      // <div><Marker
+      //   key={1*station.uninqueID}
+      //   title={station.uninqueID}
+      //   position={new navermaps.LatLng(1*station.loc_lat, 1*station.loc_lon)}
+      //   animation={0}
+      //   onClick={() => {alert('여기는 N서울타워입니다.');}}
+      // /></div>);
+      );
+  } else {
+    return (<div></div>);
+  }
+}
+
+function NaverMapView(props) {
     const navermaps = window.naver.maps;
+    console.log("NaverMapView"+JSON.stringify(props.stationInfo));
     return (
         <NaverMap
             mapDivId={'maps-getting-started-uncontrolled'} // default: react-naver-map
@@ -13,26 +43,13 @@ function NaverMapView() {
             defaultCenter={{ lat: 37.554722, lng: 126.970833 }} // 지도 초기 위치
             defaultZoom={13} // 지도 초기 확대 배율
         >
-            <Marker
-                key={1}
-                title={'서울타워?'}
-                position={new navermaps.LatLng(37.554722, 126.970833)}
-                animation={0}
-                onClick={() => {alert('여기는 N서울타워입니다.');}}
-            />
+            < NaverMapMarkers stationInfo = {props.stationInfo}/>
         </NaverMap>
   );
 }
 
-function MapLoader(pcpStationInfo) {
+function MapLoader(props) {
     const envNcpClientId = process.env.REACT_APP_NAVER_API_KEY;
-
-    // if (pcpStationInfo != null) {
-    //   let json_pcpStationInfo = JSON.stringify(pcpStationInfo); 
-    //   for (let i = 0; i < json_pcpStationInfo.length; i++) {
-    //     console.log(json_pcpStationInfo[i]);
-    //   }
-    // }
 
     return (
         <RenderAfterNavermapsLoaded
@@ -41,7 +58,7 @@ function MapLoader(pcpStationInfo) {
           loading={<p>Maps Loading...</p>}
         >
           <NaverMapView 
-          pcpStationInfo = {pcpStationInfo}/>
+          stationInfo = {props.stationInfo}/>
         </RenderAfterNavermapsLoaded>
       );
 }
